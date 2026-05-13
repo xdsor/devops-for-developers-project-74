@@ -1,18 +1,10 @@
 services:
   app:
     build: .
-    depends_on:
-      - db
     ports:
       - 8080:8080
     volumes:
       - ./app:/app
-    environment:
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_PORT: ${DATABASE_PORT}
     command: make dev
   
     
@@ -32,19 +24,6 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
-  db:
-    image: postgres:latest
-    restart: always
-    shm_size: 128mb
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
 volumes:
   caddy_data:
   caddy_config:
