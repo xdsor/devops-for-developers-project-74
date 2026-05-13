@@ -5,3 +5,6 @@ test: build
 ci: test
 publish: ci
 	docker compose -f docker-compose.yml push app
+dev:
+	docker compose build
+	docker compose --env-file .env up
